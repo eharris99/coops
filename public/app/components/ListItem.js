@@ -2,10 +2,13 @@ import React, {Component} from 'react'
 
 class ListItem extends Component {
 
-	render(){
-		return(
 
-			<li>{this.props.entity.name}, {this.props.entity.members}</li>
+	render(){
+		var content = this.props.entity.name + ", " + this.props.entity.members + ", " + this.props.entity.address + ", " + this.props.entity.officers
+
+		return(
+		
+		<li>{content}</li>
 
 			)
 	}

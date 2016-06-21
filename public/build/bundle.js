@@ -60,6 +60,10 @@
 	
 	var _Coops2 = _interopRequireDefault(_Coops);
 	
+	var _Frats = __webpack_require__(170);
+	
+	var _Frats2 = _interopRequireDefault(_Frats);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -84,12 +88,8 @@
 				return _react2.default.createElement(
 					'div',
 					null,
-					_react2.default.createElement(
-						'h2',
-						null,
-						' coops'
-					),
-					_react2.default.createElement(_Coops2.default, null)
+					_react2.default.createElement(_Coops2.default, null),
+					_react2.default.createElement(_Frats2.default, null)
 				);
 			}
 		}]);
@@ -20428,26 +20428,97 @@
 	
 			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Coops).call(this, props, context));
 	
+			_this.updateNextCoop = _this.updateNextCoop.bind(_this);
+			_this.addNextCoop = _this.addNextCoop.bind(_this);
 			_this.state = {
-				coops: [{ name: 'ICH', members: 33 }, { name: 'Loth', members: 55 }, { name: 'Nottingham', members: 22 }, { name: 'PSFC', members: 8000 }]
+				coops: [{ name: "Loth", address: "water", members: 55, officers: ["kook", "keek"] }, { name: "ICH", address: "gilman", members: 33, officers: ["elise", "jeff"] }, { name: "Nottingham", address: "spanish", members: 22, officers: ["bad", "worse"] }],
+				coop: {
+					name: "",
+					address: ""
+				}
 			};
 			return _this;
 		}
 	
 		_createClass(Coops, [{
+			key: 'updateNextCoop',
+			value: function updateNextCoop(event) {
+				console.log('updateNextCoop: ' + event.target.id + '==' + event.target.value);
+				var addNextCoop = Object.assign({}, this.state.coop);
+				addNextCoop[event.target.id] = event.target.value;
+				this.setState({
+					coop: addNextCoop
+				});
+			}
+		}, {
+			key: 'addNextCoop',
+			value: function addNextCoop(event) {
+				console.log('addNextCoop: ' + JSON.stringify(this.state.coop));
+				var nextCoop = Object.assign({}, this.state.coop);
+				var updatedCoops = Object.assign([], this.state.coops);
+				updatedCoops.push(nextCoop);
+	
+				this.setState({
+					coops: updatedCoops,
+					coop: {
+						name: '',
+						address: ''
+					}
+				});
+			}
+		}, {
 			key: 'render',
 			value: function render() {
-				var coopList = this.state.coops.map(function (coop, i) {
-	
-					return _react2.default.createElement(_ListItem2.default, { key: i, entity: coop });
+				var coopsList = this.state.coops.map(function (coop, i) {
+					return _react2.default.createElement(_ListItem2.default, { key: i, type: 'coop', entity: coop });
 				});
+	
 				return _react2.default.createElement(
 					'div',
-					null,
+					{ style: { marginTop: 20, backgroundColor: "orange", border: "3px solid #000", padding: 16 } },
+					_react2.default.createElement(
+						'h2',
+						null,
+						'Coops'
+					),
 					_react2.default.createElement(
 						'ol',
 						null,
-						coopList
+						coopsList
+					),
+					_react2.default.createElement(
+						'span',
+						null,
+						this.state.coop.name
+					),
+					_react2.default.createElement('br', null),
+					' ',
+					_react2.default.createElement('br', null),
+					_react2.default.createElement(
+						'h4',
+						null,
+						'Add Coop'
+					),
+					_react2.default.createElement(
+						'span',
+						null,
+						this.state.coop.name
+					),
+					_react2.default.createElement('br', null),
+					' ',
+					_react2.default.createElement('br', null),
+					_react2.default.createElement('input', { onChange: this.updateNextCoop, type: 'text', id: 'name', value: this.state.coop.name, placeholder: 'name' }),
+					_react2.default.createElement('br', null),
+					_react2.default.createElement('input', { onChange: this.updateNextCoop, type: 'text', id: 'address', value: this.state.coop.address, placeholder: 'address' }),
+					_react2.default.createElement('br', null),
+					_react2.default.createElement('input', { onChange: this.updateNextCoop, type: 'text', id: 'members', value: this.state.coop.members, placeholder: 'members' }),
+					_react2.default.createElement('br', null),
+					_react2.default.createElement('input', { onChange: this.updateNextCoop, type: 'text', id: 'officers', value: this.state.coop.officers, placeholder: 'officers' }),
+					_react2.default.createElement('br', null),
+					_react2.default.createElement(
+						'button',
+						{ onClick: this.addNextCoop },
+						'Add Coop'
 					)
 				);
 			}
@@ -20462,7 +20533,7 @@
 /* 169 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
 		value: true
@@ -20492,14 +20563,14 @@
 		}
 	
 		_createClass(ListItem, [{
-			key: 'render',
+			key: "render",
 			value: function render() {
+				var content = this.props.entity.name + ", " + this.props.entity.members + ", " + this.props.entity.address + ", " + this.props.entity.officers;
+	
 				return _react2.default.createElement(
-					'li',
+					"li",
 					null,
-					this.props.entity.name,
-					', ',
-					this.props.entity.members
+					content
 				);
 			}
 		}]);
@@ -20508,6 +20579,143 @@
 	}(_react.Component);
 	
 	exports.default = ListItem;
+
+/***/ },
+/* 170 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _ListItem = __webpack_require__(169);
+	
+	var _ListItem2 = _interopRequireDefault(_ListItem);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Frats = function (_Component) {
+		_inherits(Frats, _Component);
+	
+		function Frats(props, context) {
+			_classCallCheck(this, Frats);
+	
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Frats).call(this, props, context));
+	
+			_this.updateNextFrat = _this.updateNextFrat.bind(_this);
+			_this.addNextFrat = _this.addNextFrat.bind(_this);
+			_this.state = {
+				frats: [{ name: "AAA", address: "langdon", members: 33, officers: ["chet", "chad"] }, { name: "BBB", address: "gilman", members: 32, officers: ["biff", "buff"] }, { name: "CCC", address: "langdon st", members: 31, officers: ["john", "jim"] }],
+				frat: {
+					name: "",
+					address: ""
+				}
+			};
+			return _this;
+		}
+	
+		_createClass(Frats, [{
+			key: 'updateNextFrat',
+			value: function updateNextFrat(event) {
+				console.log('updateNextFrat: ' + event.target.id + '==' + event.target.value);
+				var updatedFrat = Object.assign({}, this.state.frat);
+				updatedFrat[event.target.id] = event.target.value;
+				this.setState({
+					frat: updatedFrat
+				});
+			}
+		}, {
+			key: 'addNextFrat',
+			value: function addNextFrat(event) {
+				console.log('addNextFrat: ' + JSON.stringify(this.state.frat));
+				var nextFrat = Object.assign({}, this.state.frat);
+				var updatedFrats = Object.assign([], this.state.frats);
+				updatedFrats.push(nextFrat);
+	
+				this.setState({
+					frats: updatedFrats,
+					frat: {
+						name: '',
+						address: ''
+					}
+				});
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				var fratsList = this.state.frats.map(function (frat, i) {
+					return _react2.default.createElement(_ListItem2.default, { key: i, type: 'frat', entity: frat });
+				});
+	
+				return _react2.default.createElement(
+					'div',
+					{ style: { marginTop: 20, backgroundColor: "orange", border: "3px solid #000", padding: 16 } },
+					_react2.default.createElement(
+						'h2',
+						null,
+						'Frats'
+					),
+					_react2.default.createElement(
+						'ol',
+						null,
+						fratsList
+					),
+					_react2.default.createElement(
+						'span',
+						null,
+						this.state.frat.name
+					),
+					_react2.default.createElement('br', null),
+					' ',
+					_react2.default.createElement('br', null),
+					_react2.default.createElement(
+						'h4',
+						null,
+						'Add Frat'
+					),
+					_react2.default.createElement(
+						'span',
+						null,
+						this.state.frat.name
+					),
+					_react2.default.createElement('br', null),
+					' ',
+					_react2.default.createElement('br', null),
+					_react2.default.createElement('input', { onChange: this.updateNextFrat, type: 'text', id: 'name', value: this.state.frat.name, placeholder: 'name' }),
+					_react2.default.createElement('br', null),
+					_react2.default.createElement('input', { onChange: this.updateNextFrat, type: 'text', id: 'address', value: this.state.frat.address, placeholder: 'address' }),
+					_react2.default.createElement('br', null),
+					_react2.default.createElement('input', { onChange: this.updateNextFrat, type: 'text', id: 'members', value: this.state.frat.members, placeholder: 'members' }),
+					_react2.default.createElement('br', null),
+					_react2.default.createElement('input', { onChange: this.updateNextFrat, type: 'text', id: 'officers', value: this.state.frat.officers, placeholder: 'officers' }),
+					_react2.default.createElement('br', null),
+					_react2.default.createElement(
+						'button',
+						{ onClick: this.addNextFrat },
+						'Add Frat'
+					)
+				);
+			}
+		}]);
+	
+		return Frats;
+	}(_react.Component);
+	
+	exports.default = Frats;
 
 /***/ }
 /******/ ]);

@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import ReactDOM from 'react-dom'
 import Coops from './components/Coops'
+import Frats from './components/Frats'
 
 class App extends Component {
 
@@ -8,8 +9,9 @@ class App extends Component {
 
 		return(
 			<div>
-			<h2> coops</h2>
+			
 			<Coops />
+			<Frats />
 			</div>
 
 			)

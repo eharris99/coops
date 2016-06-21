@@ -2,9 +2,11 @@ var express = require('express');
 var router = express.Router();
 var CoOp = require('../models/CoOp')
 var CoopController = require('../controllers/CoopController')
+var FratController = require('../controllers/FratController')
 
 var controllers = {
-	coop: CoopController
+	coop: CoopController,
+	frat: FratController
 }
 
 router.get('/:resource/:id', function(req, res, next) {
